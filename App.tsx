@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { View, Button, PermissionsAndroid, Dimensions } from 'react-native';
 import { RNCamera } from 'react-native-camera';
-import CameraRoll from "@react-native-community/cameraroll";
 import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import RNRestart from 'react-native-restart';

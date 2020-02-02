@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Button, PermissionsAndroid, Dimensions, ImageStore } from 'react-native';
+import { View, Button, PermissionsAndroid, Dimensions } from 'react-native';
 import { RNCamera } from 'react-native-camera';
 import CameraRoll from "@react-native-community/cameraroll";
 import { createAppContainer } from 'react-navigation';
@@ -9,6 +9,7 @@ import RNExitApp from 'react-native-exit-app';
 import BarcodeMask from 'react-native-barcode-mask';
 import ImageEditor from "@react-native-community/image-editor";
 import ImageSize from 'react-native-image-size';
+import PhotoView from 'react-native-photo-view';
 
 class HomeScreen extends Component<{ navigation: any }> {
   render() {
@@ -71,18 +72,20 @@ class HomeScreen extends Component<{ navigation: any }> {
   }
 }
 
-class CameraScreen extends Component {
+class CameraScreen extends Component<{ navigation: any }> {
   picturesList: string[] = [];
   height: number = Dimensions.get('window').height;
   width: number = Dimensions.get('window').width;
   boxSize: number = Dimensions.get('window').width * 9 / 10;
 
-  constructor(public camera: RNCamera) {
-    super(camera);
+  constructor(public navigation: any, public camera: RNCamera) {
+    super(navigation, camera);
     setInterval(() => this.takePicture(this.camera), 3000);
   }
 
   render() {
+    const { navigate } = this.props.navigation
+
     return (
       <View
         style={{
@@ -115,8 +118,13 @@ class CameraScreen extends Component {
             }}
           >
             <Button
-              title="Show Captures"
-              onPress={() => { }}
+              title="Show Last Capture"
+              onPress={() => {
+                navigate(
+                  'Captures',
+                  { lastPhotoString: this.picturesList[this.picturesList.length - 1] }
+                )
+              }}
             />
           </View>
         </RNCamera>
@@ -140,10 +148,9 @@ class CameraScreen extends Component {
         };
 
         ImageEditor.cropImage(data.uri, cropData).then(async uri => {
-          // var newPhotoLocation = await CameraRoll.saveToCameraRoll(uri);
+          var newPhotoLocation = await CameraRoll.saveToCameraRoll(uri);
 
-          // this.picturesList.push(newPhotoLocation);
-          this.picturesList.push(uri);
+          this.picturesList.push(newPhotoLocation);
           console.log(this.picturesList);
         });
       });
@@ -151,7 +158,30 @@ class CameraScreen extends Component {
   }
 }
 
-class CapturesScreen extends Component { }
+class CapturesScreen extends Component<{ navigation: any }> {
+  render() {
+    return (
+      <View
+        style={{
+          width: '100%',
+          height: '100%',
+          alignItems: 'center',
+          justifyContent: 'center',
+          flexDirection: 'column',
+        }}
+      >
+        <PhotoView
+          source={{ uri: this.props.navigation.state.params.lastPhotoString }}
+          scale={1}
+          style={{
+            width: Dimensions.get('window').width * 9 / 10,
+            height: Dimensions.get('window').width * 9 / 10,
+          }}
+        />
+      </View>
+    );
+  }
+}
 
 const MainNavigator = createStackNavigator(
   {

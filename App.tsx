@@ -107,10 +107,18 @@ class CameraScreen extends Component {
             height={this.boxSize}
             showAnimatedLine
           />
-          <Button
-            title="Show Captures"
-            onPress={() => { }}
-          />
+          <View
+            style={{
+              height: '100%',
+              width: '100%',
+              flexDirection: 'column-reverse',
+            }}
+          >
+            <Button
+              title="Show Captures"
+              onPress={() => { }}
+            />
+          </View>
         </RNCamera>
       </View>
     );

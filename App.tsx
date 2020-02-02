@@ -157,6 +157,8 @@ class CameraScreen extends Component<{ navigation: any }> {
 }
 
 class CapturesScreen extends Component<{ navigation: any }> {
+  re: RegExp = /^[A-Z|\d]+$/
+
   render() {
     return (
       <View
@@ -170,11 +172,18 @@ class CapturesScreen extends Component<{ navigation: any }> {
       >
         <PhotoView
           source={{ uri: this.props.navigation.state.params.lastPhotoString }}
-          onTap={async () => console.log(
-            await RNTextDetector.detectFromUri(
-              this.props.navigation.state.params.lastPhotoString
-            )
-          )}
+          onTap={
+            async () => {
+              const response = await RNTextDetector.detectFromUri(
+                this.props.navigation.state.params.lastPhotoString
+              );
+
+              response.map(item => {
+                if (this.re.test(item.text))
+                  console.log(item.text);
+              })
+            }
+          }
           scale={1}
           style={{
             width: Dimensions.get('window').width * 9 / 10,

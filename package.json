@@ -21,6 +21,7 @@
     "react-native-photo-view": "^1.5.2",
     "react-native-restart": "0.0.13",
     "react-native-safe-area-context": "^0.6.2",
+    "react-native-text-detector": "0.0.6",
     "react-navigation": "^4.0.10",
     "react-navigation-stack": "^2.0.15"
   },

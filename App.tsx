@@ -9,6 +9,7 @@ import BarcodeMask from 'react-native-barcode-mask';
 import ImageEditor from "@react-native-community/image-editor";
 import ImageSize from 'react-native-image-size';
 import PhotoView from 'react-native-photo-view';
+import RNTextDetector from 'react-native-text-detector';
 
 class HomeScreen extends Component<{ navigation: any }> {
   render() {
@@ -73,9 +74,8 @@ class HomeScreen extends Component<{ navigation: any }> {
 
 class CameraScreen extends Component<{ navigation: any }> {
   picturesList: string[] = [];
-  height: number = Dimensions.get('window').height;
-  width: number = Dimensions.get('window').width;
-  boxSize: number = Dimensions.get('window').width * 9 / 10;
+  boxWidth: number = Dimensions.get('window').width * 9 / 10;
+  boxHeight: number = Dimensions.get('window').width / 3;
 
   constructor(public navigation: any, public camera: RNCamera) {
     super(navigation, camera);
@@ -105,8 +105,8 @@ class CameraScreen extends Component<{ navigation: any }> {
           }}
         >
           <BarcodeMask
-            width={this.boxSize}
-            height={this.boxSize}
+            width={this.boxWidth}
+            height={this.boxHeight}
             showAnimatedLine
           />
           <View
@@ -136,19 +136,20 @@ class CameraScreen extends Component<{ navigation: any }> {
       const options = {
         quality: 1,
         fixOrientation: true,
+        skipProcessing: true,
+        base64: true,
       };
 
       const data = await camera.takePictureAsync(options);
 
       ImageSize.getSize(data.uri).then(size => {
         const cropData = {
-          offset: { x: size.width / 20, y: (size.height - size.width * 9 / 10) / 2 },
-          size: { width: size.width * 9 / 10, height: size.width * 9 / 10 },
+          offset: { x: size.width / 20, y: (size.height - size.width / 3) / 2 },
+          size: { width: size.width * 9 / 10, height: size.width / 3 },
         };
 
         ImageEditor.cropImage(data.uri, cropData).then(async uri => {
           this.picturesList.push(uri);
-          console.log(this.picturesList);
         });
       });
     }
@@ -169,10 +170,15 @@ class CapturesScreen extends Component<{ navigation: any }> {
       >
         <PhotoView
           source={{ uri: this.props.navigation.state.params.lastPhotoString }}
+          onTap={async () => console.log(
+            await RNTextDetector.detectFromUri(
+              this.props.navigation.state.params.lastPhotoString
+            )
+          )}
           scale={1}
           style={{
             width: Dimensions.get('window').width * 9 / 10,
-            height: Dimensions.get('window').width * 9 / 10,
+            height: Dimensions.get('window').width / 3,
           }}
         />
       </View>

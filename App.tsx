@@ -119,27 +119,23 @@ class CameraScreen extends Component {
   takePicture = async function (camera: RNCamera) {
     if (camera) {
       const options = {
-        quality: 0.5,
+        quality: 1,
+        fixOrientation: true,
       };
 
       const data = await camera.takePictureAsync(options);
 
       ImageSize.getSize(data.uri).then(size => {
-        console.log(size);
-
         const cropData = {
-          offset: { x: size.height / 20, y: (size.width - size.height * 9 / 10) / 2 },
-          size: { width: size.height * 9 / 10, height: size.height * 9 / 10 },
+          offset: { x: size.width / 20, y: (size.height - size.width * 9 / 10) / 2 },
+          size: { width: size.width * 9 / 10, height: size.width * 9 / 10 },
         };
 
         ImageEditor.cropImage(data.uri, cropData).then(async uri => {
-          var newPhotoLocation = await CameraRoll.saveToCameraRoll(uri);
+          // var newPhotoLocation = await CameraRoll.saveToCameraRoll(uri);
 
-          ImageSize.getSize(uri).then(size => {
-            console.log(size);
-          });
-
-          this.picturesList.push(newPhotoLocation);
+          // this.picturesList.push(newPhotoLocation);
+          this.picturesList.push(uri);
           console.log(this.picturesList);
         });
       });

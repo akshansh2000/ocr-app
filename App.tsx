@@ -80,7 +80,7 @@ class CameraScreen extends Component<{ navigation: any }> {
 
   constructor(public navigation: any, public camera: RNCamera) {
     super(navigation, camera);
-    setInterval(() => this.takePicture(this.camera), 3000);
+    setInterval(() => this.takePicture(this.camera), 2000);
   }
 
   render() {
@@ -148,9 +148,7 @@ class CameraScreen extends Component<{ navigation: any }> {
         };
 
         ImageEditor.cropImage(data.uri, cropData).then(async uri => {
-          var newPhotoLocation = await CameraRoll.saveToCameraRoll(uri);
-
-          this.picturesList.push(newPhotoLocation);
+          this.picturesList.push(uri);
           console.log(this.picturesList);
         });
       });

@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "799686747772",
+    "firebase_url": "https://firstrnapp-aa7a1.firebaseio.com",
+    "project_id": "firstrnapp-aa7a1",
+    "storage_bucket": "firstrnapp-aa7a1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:799686747772:android:82f374a100d3a767420bf9",
+        "android_client_info": {
+          "package_name": "com.firstrnapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "799686747772-4acv3rvqkljnf58n64vs7cfpa109ujtl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAza2Gk-D1RQ3xXSXEqua_cVw8iiAkH5o0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "799686747772-4acv3rvqkljnf58n64vs7cfpa109ujtl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

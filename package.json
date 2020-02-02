@@ -1,0 +1,52 @@
+{
+  "name": "FirstRNApp",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "react-native start",
+    "test": "jest"
+  },
+  "dependencies": {
+    "@react-native-community/cameraroll": "^1.3.0",
+    "@react-native-community/image-editor": "^2.2.0",
+    "@react-native-community/masked-view": "^0.1.6",
+    "react": "16.8.6",
+    "react-native": "0.60.5",
+    "react-native-barcode-mask": "^1.1.0",
+    "react-native-camera": "^3.15.1",
+    "react-native-dialog": "^5.6.0",
+    "react-native-exit-app": "^1.1.0",
+    "react-native-gesture-handler": "^1.5.3",
+    "react-native-image-size": "^1.1.3",
+    "react-native-photo-view": "^1.5.2",
+    "react-native-restart": "0.0.13",
+    "react-native-safe-area-context": "^0.6.2",
+    "react-navigation": "^4.0.10",
+    "react-navigation-stack": "^2.0.15"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.5.0",
+    "@babel/runtime": "^7.5.0",
+    "@react-native-community/eslint-config": "^0.0.3",
+    "@types/jest": "^24.0.18",
+    "@types/react": "^16.9.2",
+    "@types/react-native": "^0.60.14",
+    "@types/react-test-renderer": "^16.9.0",
+    "babel-jest": "^24.1.0",
+    "jest": "^24.1.0",
+    "metro-react-native-babel-preset": "0.54.1",
+    "react-test-renderer": "16.8.6",
+    "typescript": "^3.6.3"
+  },
+  "jest": {
+    "preset": "react-native",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx",
+      "json",
+      "node"
+    ]
+  }
+}

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Button, PermissionsAndroid, Dimensions } from 'react-native';
+import { View, Button, PermissionsAndroid, Dimensions, Text } from 'react-native';
 import { RNCamera } from 'react-native-camera';
 import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
@@ -156,8 +156,15 @@ class CameraScreen extends Component<{ navigation: any }> {
   }
 }
 
-class CapturesScreen extends Component<{ navigation: any }> {
+class CapturesScreen extends Component<{ navigation: any,  }, {ocrText: ''}> {
   re: RegExp = /^[A-Z|\d]+$/
+
+  constructor(public navigation: any) {
+    super(navigation);
+    this.state = {
+      ocrText: ''
+    };
+  }
 
   render() {
     return (
@@ -172,7 +179,7 @@ class CapturesScreen extends Component<{ navigation: any }> {
       >
         <PhotoView
           source={{ uri: this.props.navigation.state.params.lastPhotoString }}
-          onTap={
+          onLoad={
             async () => {
               const response = await RNTextDetector.detectFromUri(
                 this.props.navigation.state.params.lastPhotoString
@@ -180,7 +187,9 @@ class CapturesScreen extends Component<{ navigation: any }> {
 
               response.map(item => {
                 if (this.re.test(item.text))
-                  console.log(item.text);
+                  this.setState({
+                    ocrText: item.text,
+                  });
               })
             }
           }
@@ -190,6 +199,20 @@ class CapturesScreen extends Component<{ navigation: any }> {
             height: Dimensions.get('window').width / 3,
           }}
         />
+        <View
+          style={{
+            width: '100%',
+            height: '15%',
+          }}
+        />
+        <Text
+          style={{
+            fontSize: 24,
+            fontWeight: 'bold',
+          }}
+        >
+          {this.state.ocrText}
+        </Text>
       </View>
     );
   }

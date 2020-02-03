@@ -157,7 +157,7 @@ class CameraScreen extends Component<{ navigation: any }> {
 }
 
 class CapturesScreen extends Component<{ navigation: any, }, { ocrText: '' }> {
-  re: RegExp = /^(?=.*[0-9])(?=.*[A-Z])([A-Z0-9 ]+)$/
+  re: RegExp = /^(?=.*[0-9])(?=.*[A-Z])([A-Z0-9\s]+)$/
 
   constructor(public navigation: any) {
     super(navigation);

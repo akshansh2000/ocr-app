@@ -156,7 +156,7 @@ class CameraScreen extends Component<{ navigation: any }> {
   }
 }
 
-class CapturesScreen extends Component<{ navigation: any,  }, {ocrText: ''}> {
+class CapturesScreen extends Component<{ navigation: any, }, { ocrText: '' }> {
   re: RegExp = /^[A-Z|\d]+$/
 
   constructor(public navigation: any) {
@@ -186,6 +186,8 @@ class CapturesScreen extends Component<{ navigation: any,  }, {ocrText: ''}> {
               );
 
               response.map(item => {
+                console.log(item.text);
+
                 if (this.re.test(item.text))
                   this.setState({
                     ocrText: item.text,

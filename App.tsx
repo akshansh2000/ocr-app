@@ -207,7 +207,7 @@ class CapturesScreen extends Component<{ navigation: any,  }, {ocrText: ''}> {
         />
         <Text
           style={{
-            fontSize: 24,
+            fontSize: 30,
             fontWeight: 'bold',
           }}
         >

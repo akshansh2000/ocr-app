@@ -157,7 +157,7 @@ class CameraScreen extends Component<{ navigation: any }> {
 }
 
 class CapturesScreen extends Component<{ navigation: any, }, { ocrText: '' }> {
-  re: RegExp = /^[A-Z|\d| ]+$/
+  re: RegExp = /^(?=.*[0-9])(?=.*[A-Z])([A-Z0-9 ]+)$/
 
   constructor(public navigation: any) {
     super(navigation);
@@ -179,7 +179,7 @@ class CapturesScreen extends Component<{ navigation: any, }, { ocrText: '' }> {
       >
         <PhotoView
           source={{ uri: this.props.navigation.state.params.lastPhotoString }}
-          onLoad={
+          onLoadEnd={
             async () => {
               const response = await RNTextDetector.detectFromUri(
                 this.props.navigation.state.params.lastPhotoString
@@ -209,8 +209,7 @@ class CapturesScreen extends Component<{ navigation: any, }, { ocrText: '' }> {
         />
         <Text
           style={{
-            fontSize: 30,
-            fontWeight: 'bold',
+            fontSize: 40,
           }}
         >
           {this.state.ocrText}

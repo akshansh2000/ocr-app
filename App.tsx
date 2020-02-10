@@ -8,7 +8,6 @@ import RNExitApp from 'react-native-exit-app';
 import BarcodeMask from 'react-native-barcode-mask';
 import ImageEditor from "@react-native-community/image-editor";
 import ImageSize from 'react-native-image-size';
-import PhotoView from 'react-native-photo-view';
 import RNTextDetector from 'react-native-text-detector';
 
 class HomeScreen extends Component<{ navigation: any }> {
@@ -72,14 +71,20 @@ class HomeScreen extends Component<{ navigation: any }> {
   }
 }
 
-class CameraScreen extends Component<{ navigation: any }> {
+class CameraScreen extends Component<{ navigation: any }, { ocrText: String }> {
+  re: RegExp = /^(?=.*[0-9])(?=.*[A-Z])([A-Z0-9\s]+)$/
+
   picturesList: string[] = [];
   boxWidth: number = Dimensions.get('window').width * 9 / 10;
   boxHeight: number = Dimensions.get('window').width / 3;
 
   constructor(public navigation: any, public camera: RNCamera) {
     super(navigation, camera);
-    setInterval(() => this.takePicture(this.camera), 2000);
+    this.state = {
+      ocrText: ''
+    };
+
+    setTimeout(() => this.takePicture(this.camera), 2000);
   }
 
   render() {
@@ -109,6 +114,25 @@ class CameraScreen extends Component<{ navigation: any }> {
             height={this.boxHeight}
             showAnimatedLine
           />
+          <View
+            style={{
+              height: '15%',
+              width: '90%',
+              backgroundColor: 'white',
+              alignSelf: 'center',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            <Text
+              style={{
+                fontSize: 30,
+                color: 'black',
+              }}
+            >
+              {this.state.ocrText}
+            </Text>
+          </View>
           <View
             style={{
               height: '100%',
@@ -154,68 +178,20 @@ class CameraScreen extends Component<{ navigation: any }> {
       });
     }
   }
-}
 
-class CapturesScreen extends Component<{ navigation: any, }, { ocrText: '' }> {
-  re: RegExp = /^(?=.*[0-9])(?=.*[A-Z])([A-Z0-9\s]+)$/
-
-  constructor(public navigation: any) {
-    super(navigation);
-    this.state = {
-      ocrText: ''
-    };
-  }
-
-  render() {
-    return (
-      <View
-        style={{
-          width: '100%',
-          height: '100%',
-          alignItems: 'center',
-          justifyContent: 'center',
-          flexDirection: 'column',
-        }}
-      >
-        <PhotoView
-          source={{ uri: this.props.navigation.state.params.lastPhotoString }}
-          onLoadEnd={
-            async () => {
-              const response = await RNTextDetector.detectFromUri(
-                this.props.navigation.state.params.lastPhotoString
-              );
-
-              response.map(item => {
-                console.log(item.text);
-
-                if (this.re.test(item.text))
-                  this.setState({
-                    ocrText: item.text,
-                  });
-              })
-            }
-          }
-          scale={1}
-          style={{
-            width: Dimensions.get('window').width * 9 / 10,
-            height: Dimensions.get('window').width / 3,
-          }}
-        />
-        <View
-          style={{
-            width: '100%',
-            height: '15%',
-          }}
-        />
-        <Text
-          style={{
-            fontSize: 40,
-          }}
-        >
-          {this.state.ocrText}
-        </Text>
-      </View>
+  detectText = async function (uri: String) {
+    const response = await RNTextDetector.detectFromUri(
+      uri
     );
+
+    response.map(item => {
+      console.log(item.text);
+
+      if (this.re.test(item.text))
+        this.setState({
+          ocrText: item.text,
+        });
+    });
   }
 }
 
@@ -223,7 +199,6 @@ const MainNavigator = createStackNavigator(
   {
     Home: { screen: HomeScreen },
     Camera: { screen: CameraScreen },
-    Captures: { screen: CapturesScreen },
   },
   {
     initialRouteKey: 'Home',

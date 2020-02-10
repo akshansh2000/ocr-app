@@ -81,7 +81,7 @@ class CameraScreen extends Component<{ navigation: any }, { ocrText: String }> {
   constructor(public navigation: any, public camera: RNCamera) {
     super(navigation, camera);
     this.state = {
-      ocrText: ''
+      ocrText: 'Point the camera to a license plate or a container code'
     };
 
     setTimeout(() => this.takePicture(this.camera), 2000);
@@ -116,39 +116,43 @@ class CameraScreen extends Component<{ navigation: any }, { ocrText: String }> {
           />
           <View
             style={{
-              height: '15%',
-              width: '90%',
-              backgroundColor: 'white',
-              alignSelf: 'center',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}
-          >
-            <Text
-              style={{
-                fontSize: 30,
-                color: 'black',
-              }}
-            >
-              {this.state.ocrText}
-            </Text>
-          </View>
-          <View
-            style={{
               height: '100%',
               width: '100%',
-              flexDirection: 'column-reverse',
+              flexDirection: 'column',
+              alignItems: 'center',
+              justifyContent: 'space-between',
             }}
           >
-            <Button
-              title="Show Last Capture"
-              onPress={() => {
-                navigate(
-                  'Captures',
-                  { lastPhotoString: this.picturesList[this.picturesList.length - 1] }
-                )
+            <View
+              style={{
+                height: '15%',
+                width: '90%',
+                backgroundColor: 'white',
+                alignSelf: 'center',
+                justifyContent: 'center',
+                alignItems: 'center',
               }}
-            />
+            >
+              <Text
+                style={{
+                  fontSize: 30,
+                  color: 'black',
+                  textAlign: 'center',
+                }}
+              >
+                {this.state.ocrText}
+              </Text>
+            </View>
+            <View
+              style={{
+                width: '100%',
+              }}
+            >
+              <Button
+                title="Submit"
+                onPress={() => navigate('Home')}
+              />
+            </View>
           </View>
         </RNCamera>
       </View>
@@ -174,6 +178,7 @@ class CameraScreen extends Component<{ navigation: any }, { ocrText: String }> {
 
         ImageEditor.cropImage(data.uri, cropData).then(async uri => {
           this.picturesList.push(uri);
+          this.detectText(uri);
         });
       });
     }
@@ -192,6 +197,8 @@ class CameraScreen extends Component<{ navigation: any }, { ocrText: String }> {
           ocrText: item.text,
         });
     });
+
+    this.takePicture(this.camera);
   }
 }
 

@@ -14,6 +14,7 @@
     "react-native": "0.60.5",
     "react-native-barcode-mask": "^1.1.0",
     "react-native-camera": "^3.15.1",
+    "react-native-clear-app-cache": "^1.0.4",
     "react-native-dialog": "^5.6.0",
     "react-native-exit-app": "^1.1.0",
     "react-native-gesture-handler": "^1.5.3",

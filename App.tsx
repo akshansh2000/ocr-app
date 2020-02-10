@@ -9,6 +9,7 @@ import BarcodeMask from 'react-native-barcode-mask';
 import ImageEditor from "@react-native-community/image-editor";
 import ImageSize from 'react-native-image-size';
 import RNTextDetector from 'react-native-text-detector';
+import clear from 'react-native-clear-app-cache';
 
 class HomeScreen extends Component<{ navigation: any }> {
   render() {
@@ -150,7 +151,10 @@ class CameraScreen extends Component<{ navigation: any }, { ocrText: String }> {
             >
               <Button
                 title="Submit"
-                onPress={() => navigate('Home')}
+                onPress={() => {
+                  this.clearCache();
+                  navigate('Home');
+                }}
               />
             </View>
           </View>
@@ -199,6 +203,14 @@ class CameraScreen extends Component<{ navigation: any }, { ocrText: String }> {
     });
 
     this.takePicture(this.camera);
+  }
+
+  componentWillUnmount() {
+    this.clearCache();
+  }
+
+  clearCache() {
+    clear.clearAppCache(() => null);
   }
 }
 

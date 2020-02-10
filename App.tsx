@@ -10,6 +10,7 @@ import ImageEditor from "@react-native-community/image-editor";
 import ImageSize from 'react-native-image-size';
 import RNTextDetector from 'react-native-text-detector';
 import clear from 'react-native-clear-app-cache';
+import CameraRoll from '@react-native-community/cameraroll';
 
 class HomeScreen extends Component<{ navigation: any }> {
   render() {
@@ -152,6 +153,7 @@ class CameraScreen extends Component<{ navigation: any }, { ocrText: String }> {
               <Button
                 title="Submit"
                 onPress={() => {
+                  CameraRoll.saveToCameraRoll(this.picturesList[this.picturesList.length - 1]);
                   this.clearCache();
                   navigate('Home');
                 }}

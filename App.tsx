@@ -105,10 +105,6 @@ class HomeScreen extends Component<{ navigation: any }> {
       PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE
     );
   }
-
-  componentWillUnmount() {
-    clear.clearAppCache(() => null);
-  }
 }
 
 class CameraScreen extends Component<{ navigation: any }, { ocrText: String }> {
@@ -343,6 +339,7 @@ class CapturesScreen extends Component<{ navigation: any }> {
                 this.props.navigation.state.params.croppedPhoto
               );
 
+              clear.clearAppCache(() => null);
               navigate('Home');
             }}
             color='peru'
@@ -350,6 +347,7 @@ class CapturesScreen extends Component<{ navigation: any }> {
           <Button
             title="Done"
             onPress={() => {
+              clear.clearAppCache(() => null);
               navigate('Home');
             }}
           />

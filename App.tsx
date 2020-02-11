@@ -287,7 +287,7 @@ class CapturesScreen extends Component<{ navigation: any }> {
               uri: this.props.navigation.state.params.fullPhoto
             }}
             minimumZoomScale={0.5}
-            maximumZoomScale={1.5}
+            maximumZoomScale={2}
             androidScaleType='center'
             style={{
               width: '90%'
@@ -298,7 +298,7 @@ class CapturesScreen extends Component<{ navigation: any }> {
               uri: this.props.navigation.state.params.croppedPhoto
             }}
             minimumZoomScale={0.5}
-            maximumZoomScale={1.5}
+            maximumZoomScale={2}
             androidScaleType='center'
             style={{
               width: '90%'

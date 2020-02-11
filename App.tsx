@@ -259,6 +259,26 @@ class CameraScreen extends Component<{ navigation: any }, { ocrText: String }> {
   }
 }
 
+class CapturesScreen extends Component<{ navigation: any }> {
+  constructor(public navigation: any) {
+    super(navigation);
+  }
+
+  render() {
+    return (
+      <View
+        style={{
+          height: '100%',
+          width: '100%',
+          justifyContent: 'space-evenly',
+          alignItems: 'center',
+        }}
+      >
+      </View>
+    );
+  }
+}
+
 const MainNavigator = createStackNavigator(
   {
     Home: { screen: HomeScreen },

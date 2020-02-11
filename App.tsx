@@ -33,13 +33,43 @@ class HomeScreen extends Component<{ navigation: any }> {
           }}
         >
           <Button
-            title="Camera"
+            title="Something Smaller"
+            onPress={
+              () => navigate('Camera', {
+                widthFactor: 7 / 10,
+                heightFactor: 1 / 4,
+              })
+            }
+            color='olive'
+          />
+          <Button
+            title="License Plate"
             onPress={
               () => navigate('Camera', {
                 widthFactor: 9 / 10,
                 heightFactor: 1 / 3,
               })
             }
+          />
+          <Button
+            title="Container Code"
+            onPress={
+              () => navigate('Camera', {
+                widthFactor: 9 / 10,
+                heightFactor: 1 / 2,
+              })
+            }
+            color='navy'
+          />
+          <Button
+            title="Something Bigger"
+            onPress={
+              () => navigate('Camera', {
+                widthFactor: 9.5 / 10,
+                heightFactor: 3 / 4,
+              })
+            }
+            color='peru'
           />
           <Button
             title="Restart"

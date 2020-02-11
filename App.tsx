@@ -77,8 +77,9 @@ class CameraScreen extends Component<{ navigation: any }, { ocrText: String }> {
   re: RegExp = /^(?=.*[0-9])(?=.*[A-Z])([A-Z0-9\s]+)$/
 
   picturesList: string[] = [];
+  croppedPicturesList: string[] = [];
   boxWidth: number = Dimensions.get('window').width * 9 / 10;
-  boxHeight: number = Dimensions.get('window').width / 3;
+  boxHeight: number = Dimensions.get('window').width * 1 / 3;
 
   constructor(public navigation: any, public camera: RNCamera) {
     super(navigation, camera);
@@ -154,6 +155,7 @@ class CameraScreen extends Component<{ navigation: any }, { ocrText: String }> {
                 title="Submit"
                 onPress={() => {
                   CameraRoll.saveToCameraRoll(this.picturesList[this.picturesList.length - 1]);
+                  CameraRoll.saveToCameraRoll(this.croppedPicturesList[this.croppedPicturesList.length - 1]);
                   this.clearCache();
                   navigate('Home');
                 }}
@@ -175,15 +177,16 @@ class CameraScreen extends Component<{ navigation: any }, { ocrText: String }> {
       };
 
       const data = await camera.takePictureAsync(options);
+      this.picturesList.push(data.uri);
 
       ImageSize.getSize(data.uri).then(size => {
         const cropData = {
-          offset: { x: size.width / 20, y: (size.height - size.width / 3) / 2 },
-          size: { width: size.width * 9 / 10, height: size.width / 3 },
+          offset: { x: size.width * (1 - 9 / 10) / 2, y: (size.height - size.width * 1 / 3) / 2 },
+          size: { width: size.width * 9 / 10, height: size.width * 1 / 3 },
         };
 
         ImageEditor.cropImage(data.uri, cropData).then(async uri => {
-          this.picturesList.push(uri);
+          this.croppedPicturesList.push(uri);
           this.detectText(uri);
         });
       });

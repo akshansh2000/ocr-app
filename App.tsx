@@ -35,7 +35,10 @@ class HomeScreen extends Component<{ navigation: any }> {
           <Button
             title="Camera"
             onPress={
-              () => navigate('Camera')
+              () => navigate('Camera', {
+                widthFactor: 9 / 10,
+                heightFactor: 1 / 3,
+              })
             }
           />
           <Button
@@ -82,8 +85,6 @@ class CameraScreen extends Component<{ navigation: any }, { ocrText: String }> {
 
   picturesList: string[] = [];
   croppedPicturesList: string[] = [];
-  boxWidth: number = Dimensions.get('window').width * 9 / 10;
-  boxHeight: number = Dimensions.get('window').width * 1 / 3;
 
   constructor(public navigation: any, public camera: RNCamera) {
     super(navigation, camera);
@@ -117,8 +118,12 @@ class CameraScreen extends Component<{ navigation: any }, { ocrText: String }> {
           }}
         >
           <BarcodeMask
-            width={this.boxWidth}
-            height={this.boxHeight}
+            width={
+              Dimensions.get('window').width * this.props.navigation.state.params.widthFactor
+            }
+            height={
+              Dimensions.get('window').width * this.props.navigation.state.params.heightFactor
+            }
             showAnimatedLine
           />
           <View
@@ -158,8 +163,12 @@ class CameraScreen extends Component<{ navigation: any }, { ocrText: String }> {
               <Button
                 title="Submit"
                 onPress={() => {
-                  CameraRoll.saveToCameraRoll(this.picturesList[this.picturesList.length - 1]);
-                  CameraRoll.saveToCameraRoll(this.croppedPicturesList[this.croppedPicturesList.length - 1]);
+                  CameraRoll.saveToCameraRoll(
+                    this.picturesList[this.picturesList.length - 1]
+                  );
+                  CameraRoll.saveToCameraRoll(
+                    this.croppedPicturesList[this.croppedPicturesList.length - 1]
+                  );
                   navigate('Home');
                 }}
               />
@@ -184,8 +193,14 @@ class CameraScreen extends Component<{ navigation: any }, { ocrText: String }> {
 
       ImageSize.getSize(data.uri).then(size => {
         const cropData = {
-          offset: { x: size.width * (1 - 9 / 10) / 2, y: (size.height - size.width * 1 / 3) / 2 },
-          size: { width: size.width * 9 / 10, height: size.width * 1 / 3 },
+          offset: {
+            x: size.width * (1 - this.props.navigation.state.params.widthFactor) / 2,
+            y: (size.height - size.width * this.props.navigation.state.params.heightFactor) / 2
+          },
+          size: {
+            width: size.width * this.props.navigation.state.params.widthFactor,
+            height: size.width * this.props.navigation.state.params.heightFactor,
+          },
         };
 
         ImageEditor.cropImage(data.uri, cropData).then(async uri => {

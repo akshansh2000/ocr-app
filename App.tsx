@@ -336,6 +336,13 @@ class CapturesScreen extends Component<{ navigation: any }> {
           <Button
             title="Save Images"
             onPress={() => {
+              CameraRoll.saveToCameraRoll(
+                this.props.navigation.state.params.fullPhoto
+              );
+              CameraRoll.saveToCameraRoll(
+                this.props.navigation.state.params.croppedPhoto
+              );
+
               navigate('Home');
             }}
             color='peru'

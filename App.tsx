@@ -11,6 +11,7 @@ import ImageSize from 'react-native-image-size';
 import RNTextDetector from 'react-native-text-detector';
 import clear from 'react-native-clear-app-cache';
 import CameraRoll from '@react-native-community/cameraroll';
+import PhotoView from 'react-native-photo-view';
 
 class HomeScreen extends Component<{ navigation: any }> {
   render() {
@@ -265,15 +266,60 @@ class CapturesScreen extends Component<{ navigation: any }> {
   }
 
   render() {
+    const { navigate } = this.props.navigation
+
     return (
       <View
         style={{
           height: '100%',
           width: '100%',
-          justifyContent: 'space-evenly',
-          alignItems: 'center',
+          justifyContent: 'space-between',
         }}
       >
+        <View
+          style={{
+            height: '90%',
+            width: '100%',
+            justifyContent: 'space-evenly',
+            alignItems: 'center',
+          }}
+        >
+          <PhotoView
+            source={{
+              uri: this.props.navigation.state.params.fullPhoto
+            }}
+            minimumZoomScale={0.5}
+            maximumZoomScale={1.5}
+            androidScaleType='center'
+            style={{
+              width: '90%'
+            }}
+          />
+          <PhotoView
+            source={{
+              uri: this.props.navigation.state.params.croppedPhoto
+            }}
+            minimumZoomScale={0.5}
+            maximumZoomScale={1.5}
+            androidScaleType='center'
+            style={{
+              width: '90%'
+            }}
+          />
+          <Text
+            style={{
+              color: 'black',
+              fontSize: 30,
+              textAlign: 'center',
+            }}
+          >
+            {this.props.navigation.state.params.ocrText}
+          </Text>
+        </View>
+        <Button
+          title="Done"
+          onPress={() => navigate('Home')}
+        />
       </View>
     );
   }

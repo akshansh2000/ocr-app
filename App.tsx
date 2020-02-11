@@ -192,15 +192,13 @@ class CameraScreen extends Component<{ navigation: any }, { ocrText: String }> {
               }}
             >
               <Button
-                title="Submit"
+                title="Capture"
                 onPress={() => {
-                  CameraRoll.saveToCameraRoll(
-                    this.picturesList[this.picturesList.length - 1]
-                  );
-                  CameraRoll.saveToCameraRoll(
-                    this.croppedPicturesList[this.croppedPicturesList.length - 1]
-                  );
-                  navigate('Home');
+                  navigate('Captures', {
+                    fullPhoto: this.picturesList[this.picturesList.length - 1],
+                    croppedPhoto: this.croppedPicturesList[this.croppedPicturesList.length - 1],
+                    ocrText: this.state.ocrText,
+                  });
                 }}
               />
             </View>
@@ -278,7 +276,7 @@ class CapturesScreen extends Component<{ navigation: any }> {
       >
         <View
           style={{
-            height: '90%',
+            height: '80%',
             width: '100%',
             justifyContent: 'space-evenly',
             alignItems: 'center',
@@ -317,8 +315,17 @@ class CapturesScreen extends Component<{ navigation: any }> {
           </Text>
         </View>
         <Button
+          title="Save Images"
+          onPress={() => {
+            navigate('Home');
+          }}
+          color='peru'
+        />
+        <Button
           title="Done"
-          onPress={() => navigate('Home')}
+          onPress={() => {
+            navigate('Home');
+          }}
         />
       </View>
     );
@@ -329,6 +336,7 @@ const MainNavigator = createStackNavigator(
   {
     Home: { screen: HomeScreen },
     Camera: { screen: CameraScreen },
+    Captures: { screen: CapturesScreen },
   },
   {
     initialRouteKey: 'Home',

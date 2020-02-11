@@ -71,6 +71,10 @@ class HomeScreen extends Component<{ navigation: any }> {
       PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE
     );
   }
+
+  componentWillUnmount() {
+    clear.clearAppCache(() => null);
+  }
 }
 
 class CameraScreen extends Component<{ navigation: any }, { ocrText: String }> {
@@ -156,7 +160,6 @@ class CameraScreen extends Component<{ navigation: any }, { ocrText: String }> {
                 onPress={() => {
                   CameraRoll.saveToCameraRoll(this.picturesList[this.picturesList.length - 1]);
                   CameraRoll.saveToCameraRoll(this.croppedPicturesList[this.croppedPicturesList.length - 1]);
-                  this.clearCache();
                   navigate('Home');
                 }}
               />
@@ -208,14 +211,6 @@ class CameraScreen extends Component<{ navigation: any }, { ocrText: String }> {
     });
 
     this.takePicture(this.camera);
-  }
-
-  componentWillUnmount() {
-    this.clearCache();
-  }
-
-  clearCache() {
-    clear.clearAppCache(() => null);
   }
 }
 

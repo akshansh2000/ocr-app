@@ -282,28 +282,46 @@ class CapturesScreen extends Component<{ navigation: any }> {
             alignItems: 'center',
           }}
         >
-          <PhotoView
-            source={{
-              uri: this.props.navigation.state.params.fullPhoto
-            }}
-            minimumZoomScale={0.5}
-            maximumZoomScale={2}
-            androidScaleType='center'
+          <View
             style={{
-              width: '90%'
+              backgroundColor: 'white',
+              height: '30%',
+              width: '90%',
             }}
-          />
-          <PhotoView
-            source={{
-              uri: this.props.navigation.state.params.croppedPhoto
-            }}
-            minimumZoomScale={0.5}
-            maximumZoomScale={2}
-            androidScaleType='center'
+          >
+            <PhotoView
+              source={{
+                uri: this.props.navigation.state.params.fullPhoto
+              }}
+              minimumZoomScale={1}
+              maximumZoomScale={2}
+              androidScaleType='fitCenter'
+              style={{
+                width: '100%',
+                height: '100%',
+              }}
+            />
+          </View>
+          <View
             style={{
-              width: '90%'
+              backgroundColor: 'white',
+              height: '30%',
+              width: '90%',
             }}
-          />
+          >
+            <PhotoView
+              source={{
+                uri: this.props.navigation.state.params.croppedPhoto
+              }}
+              minimumZoomScale={1}
+              maximumZoomScale={2}
+              androidScaleType='fitCenter'
+              style={{
+                width: '100%',
+                height: '100%',
+              }}
+            />
+          </View>
           <Text
             style={{
               color: 'black',
@@ -314,19 +332,21 @@ class CapturesScreen extends Component<{ navigation: any }> {
             {this.props.navigation.state.params.ocrText}
           </Text>
         </View>
-        <Button
-          title="Save Images"
-          onPress={() => {
-            navigate('Home');
-          }}
-          color='peru'
-        />
-        <Button
-          title="Done"
-          onPress={() => {
-            navigate('Home');
-          }}
-        />
+        <View>
+          <Button
+            title="Save Images"
+            onPress={() => {
+              navigate('Home');
+            }}
+            color='peru'
+          />
+          <Button
+            title="Done"
+            onPress={() => {
+              navigate('Home');
+            }}
+          />
+        </View>
       </View>
     );
   }

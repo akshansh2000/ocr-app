@@ -84,7 +84,7 @@ class CameraScreen extends Component<{ navigation: any }, { ocrText: String }> {
   constructor(public navigation: any, public camera: RNCamera) {
     super(navigation, camera);
     this.state = {
-      ocrText: 'Point the camera to a license plate or a container code'
+      ocrText: 'Scan a license plate or a container code'
     };
 
     setTimeout(() => this.takePicture(this.camera), 2000);

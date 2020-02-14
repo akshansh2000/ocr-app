@@ -143,6 +143,7 @@ class CameraScreen extends Component<{ navigation: any }, { ocrText: String }> {
             width: '100%',
             height: '100%',
           }}
+          camera1ScanMode="fast"
         >
           <BarcodeMask
             width={
@@ -228,7 +229,7 @@ class CameraScreen extends Component<{ navigation: any }, { ocrText: String }> {
           },
         };
 
-        ImageEditor.cropImage(data.uri, cropData).then(async uri => {
+        ImageEditor.cropImage(data.uri, cropData).then(uri => {
           this.croppedPicturesList.push(uri);
           this.detectText(uri);
         });
@@ -258,6 +259,8 @@ class CapturesScreen extends Component<{ navigation: any }> {
   constructor(public navigation: any) {
     super(navigation);
   }
+
+  componentWillUnmount() { clear.clearAppCache(() => null); }
 
   render() {
     const { navigate } = this.props.navigation
@@ -339,7 +342,6 @@ class CapturesScreen extends Component<{ navigation: any }> {
                 this.props.navigation.state.params.croppedPhoto
               );
 
-              clear.clearAppCache(() => null);
               navigate('Home');
             }}
             color='peru'
@@ -347,7 +349,6 @@ class CapturesScreen extends Component<{ navigation: any }> {
           <Button
             title="Done"
             onPress={() => {
-              clear.clearAppCache(() => null);
               navigate('Home');
             }}
           />

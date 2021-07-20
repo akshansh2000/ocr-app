@@ -11,7 +11,7 @@
         "@react-native-community/image-editor": "^2.2.0",
         "@react-native-community/masked-view": "^0.1.6",
         "react": "16.8.6",
-        "react-native": "0.60.5",
+        "react-native": "0.62.3",
         "react-native-barcode-mask": "^1.1.0",
         "react-native-camera": "https://github.com/Boris-c/react-native-camera.git#master",
         "react-native-clear-app-cache": "^1.0.4",
